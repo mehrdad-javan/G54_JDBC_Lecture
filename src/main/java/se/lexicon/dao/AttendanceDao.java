@@ -1,5 +1,8 @@
 package se.lexicon.dao;
 
+import se.lexicon.model.Attendance;
+
 public interface AttendanceDao {
-    // basic CRUD operations
+    Attendance save(Attendance attendance);
+    // todo: add more methods as needed
 }

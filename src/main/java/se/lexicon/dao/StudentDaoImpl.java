@@ -33,6 +33,7 @@ public class StudentDaoImpl implements StudentDao {
                 try (ResultSet keys = preparedStatement.getGeneratedKeys()) {
                     if (keys.next()) {
                         int firstId = keys.getInt(1);
+                        // keys.getTimestamp(2); // get the generated timestamp
                         student.setId(firstId);
                     }
                 }
@@ -47,11 +48,11 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> findAll() {
         List<Student> students = new ArrayList<>();
-        try(
+        try (
                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM student");
                 ResultSet resultSet = preparedStatement.executeQuery()
-                ){
-            while (resultSet.next()){
+        ) {
+            while (resultSet.next()) {
                 Student student = new Student(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
@@ -59,7 +60,7 @@ public class StudentDaoImpl implements StudentDao {
                         resultSet.getTimestamp("create_date").toLocalDateTime());
                 students.add(student);
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error retrieving all students: " + e.getMessage());
         }
         return students;
